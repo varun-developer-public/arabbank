@@ -1,0 +1,541 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Login - Data Marketplace{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --white: #fff;
+        --gray-900: #101828;
+        --gray-700: #344054;
+        --gray-500: #667085;
+        --gray-300: #d0d5dd;
+        --blue: #1501ff;
+        --error-red: #dc3545;
+    }
+
+    .login-page {
+        align-items: stretch;
+        display: flex;
+        width: 100%;
+        background-color: var(--white);
+        min-height: calc(100vh - 120px);
+    }
+
+    .hero-image-section {
+        min-height: 83vh;
+        width: 707px;
+        background: url("{% static 'images/core/arab-bank-main.png' %}");
+        background-position: left;
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding: 40px 0px;
+    }
+
+    .hero-image {
+        aspect-ratio: 0.89;
+        object-fit: contain;
+        object-position: center;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        display: block;
+    }
+
+    .form-section {
+        display: flex;
+        min-width: 240px;
+        padding: 40px 0 96px;
+        align-items: center;
+        gap: 40px 64px;
+        justify-content: start;
+        height: 100%;
+        width: 720px;
+        max-width: 50%;
+    }
+
+    .form-container {
+        align-self: stretch;
+        display: flex;
+        min-width: 240px;
+        width: 100%;
+        align-items: start;
+        justify-content: center;
+        flex: 1;
+        flex-shrink: 1;
+        flex-basis: 0%;
+        margin: auto 0;
+        padding: 0 32px;
+    }
+
+    .form-wrapper {
+        display: flex;
+        min-width: 240px;
+        width: 512px;
+        max-width: 100%;
+        padding-top: 40px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-content {
+        width: 100%;
+    }
+
+    .page-header {
+        width: 100%;
+        margin-bottom: 48px;
+        text-align: center;
+    }
+
+    .page-title {
+        width: 100%;
+        color: var(--gray-900);
+        letter-spacing: -0.96px;
+        font: 600 48px/1.2 Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        margin: 0;
+    }
+
+    .login-form {
+        width: 100%;
+    }
+
+    .form-fields {
+        width: 100%;
+        margin-bottom: 32px;
+    }
+
+    .input-group {
+        width: 100%;
+        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        margin-bottom: 24px;
+    }
+
+    .input-group:first-child {
+        margin-bottom: 24px;
+    }
+
+    .field-label {
+        color: var(--gray-700);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .input-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .text-input {
+        align-items: center;
+        border-radius: 8px;
+        border: 1px solid var(--gray-300);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        color: var(--gray-900);
+        font-weight: 400;
+        background-color: var(--white);
+        padding: 12px 16px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+    }
+
+    .text-input::placeholder {
+        color: var(--gray-500);
+    }
+
+    .text-input:focus {
+        outline: none;
+        border-color: var(--blue);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0 0 0 3px rgba(21, 1, 255, 0.1);
+    }
+
+    .form-actions {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .primary-button {
+        border-radius: 8px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        border: 1px solid var(--blue);
+        background-color: var(--blue);
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+        padding: 12px 20px;
+        font: 500 24px/1 Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        min-height: 48px;
+    }
+
+    .primary-button:hover {
+        background-color: #1400e6;
+        border-color: #1400e6;
+    }
+
+    .primary-button:active {
+        transform: translateY(1px);
+    }
+
+    .primary-button:focus {
+        outline: 2px solid var(--blue);
+        outline-offset: 2px;
+    }
+
+    .divider-text {
+        color: rgba(91, 91, 91, 1);
+        font-weight: 400;
+        align-self: center;
+        font-size: 24px;
+        font-family: Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+        text-align: center;
+    }
+
+    .secondary-button {
+        border-radius: 8px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        color: var(--blue);
+        background: transparent;
+        border: 1.5px solid var(--blue);
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+        font: 500 24px/1 Roboto, -apple-system, Roboto, Helvetica, sans-serif;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        text-decoration: none;
+        min-height: 48px;
+    }
+
+    .secondary-button:hover {
+        background-color: rgba(21, 1, 255, 0.05);
+        color: var(--blue);
+        text-decoration: none;
+    }
+
+    .secondary-button:active {
+        transform: translateY(1px);
+    }
+
+    .secondary-button:focus {
+        outline: 2px solid var(--blue);
+        outline-offset: 2px;
+    }
+
+    /* Error handling styles */
+    .alert {
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .alert-danger {
+        background-color: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+    }
+
+    .errorlist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .errorlist li {
+        color: var(--error-red);
+        font-size: 14px;
+        margin-top: 4px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .form-section {
+            width: 600px;
+        }
+
+        .page-title {
+            font-size: 42px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .login-page {
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .hero-image-section {
+            min-height: 200px;
+            max-height: 300px;
+            width: 100%;
+            flex: none;
+        }
+
+        .form-section {
+            width: 100%;
+            max-width: 100%;
+            padding: 20px 0 40px;
+        }
+
+        .form-container {
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-size: 36px;
+            letter-spacing: -0.72px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            font-size: 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-image-section {
+            min-height: 150px;
+            max-height: 200px;
+            padding: 20px;
+        }
+
+        .form-wrapper {
+            padding-top: 20px;
+        }
+
+        .page-title {
+            font-size: 32px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            font-size: 18px;
+            padding: 14px 20px;
+        }
+
+        .text-input {
+            font-size: 16px;
+            padding: 14px 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            padding: 0 16px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            letter-spacing: -0.56px;
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .form-fields {
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            font-size: 16px;
+            padding: 12px 16px;
+            min-height: 44px;
+        }
+
+        .divider-text {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .form-container {
+            padding: 0 12px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        .text-input {
+            padding: 12px 14px;
+        }
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+        .primary-button,
+        .secondary-button,
+        .text-input {
+            transition: none;
+        }
+    }
+
+    @media (prefers-contrast: high) {
+        .text-input {
+            border-width: 2px;
+        }
+
+        .primary-button,
+        .secondary-button {
+            border-width: 2px;
+        }
+    }
+
+    .primary-button:focus-visible,
+    .secondary-button:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 2px;
+    }
+
+    .text-input:focus-visible {
+        outline: none;
+    }
+
+    /* Print styles */
+    @media print {
+        .hero-image-section {
+            display: none;
+        }
+
+        .login-page {
+            display: block;
+        }
+
+        .form-section {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="login-page">
+    <div class="hero-image-section">
+        <!-- <img src="{% static 'images/core/arab-bank-main.png' %}" alt="Data marketplace illustration" class="hero-image" /> -->
+    </div>
+
+    <section class="form-section">
+        <div class="form-container">
+            <div class="form-wrapper">
+                <div class="form-content">
+                    <header class="page-header">
+                        <h1 class="page-title">Data Marketplace</h1>
+                    </header>
+
+                    <form class="login-form" method="post" role="form" aria-labelledby="page-title">
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <div class="form-fields">
+                            <div class="input-group">
+                                <label for="id_username" class="field-label">Username</label>
+                                <div class="input-container">
+                                    <input
+                                        type="text"
+                                        id="id_username"
+                                        name="username"
+                                        class="text-input"
+                                        placeholder="Enter your username"
+                                        required
+                                        autocomplete="username"
+                                        aria-describedby="username-help"
+                                        {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
+                                    />
+                                </div>
+                                {% if form.username.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.username.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="input-group">
+                                <label for="id_password" class="field-label">Password</label>
+                                <div class="input-container">
+                                    <input
+                                        type="password"
+                                        id="id_password"
+                                        name="password"
+                                        class="text-input"
+                                        placeholder="Enter your password"
+                                        required
+                                        autocomplete="current-password"
+                                        aria-describedby="password-help"
+                                    />
+                                </div>
+                                {% if form.password.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.password.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="primary-button">
+                                Login
+                            </button>
+
+                            <div class="divider-text">or</div>
+
+                            <a href="{% url 'signup' %}" class="secondary-button">
+                                Signup
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Arab Bank{% endblock %}</title>
+
+    <!-- Footer CSS -->
+    <link rel="stylesheet" href="{% static 'css/core/styles.css' %}">
+
+    <!-- Additional CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+      <!-- Include Header -->
+        {% include 'core/header.html' %}
+
+    <div class="page-container">
+        <main class="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- Include Footer -->
+        {% include 'core/footer.html' %}
+    </div>
+
+    <!-- JavaScript -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
