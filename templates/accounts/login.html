@@ -16,16 +16,16 @@
     }
 
     .login-page {
-        align-items: stretch;
         display: flex;
+        justify-content: left;
         width: 100%;
         background-color: var(--white);
-        min-height: calc(100vh - 120px);
+        min-height: calc(100vh - 220px);
     }
 
     .hero-image-section {
         min-height: 83vh;
-        width: 707px;
+        width: 1000px;
         background: url("{% static 'images/core/arab-bank-main.png' %}");
         background-position: left;
         background-size: contain;
@@ -45,14 +45,14 @@
 
     .form-section {
         display: flex;
-        min-width: 240px;
+        min-width: 230px;
         padding: 40px 0 96px;
         align-items: center;
         gap: 40px 64px;
         justify-content: start;
         height: 100%;
         width: 720px;
-        max-width: 50%;
+        max-width: 30%;
     }
 
     .form-container {
@@ -137,7 +137,7 @@
         border: 1px solid var(--gray-300);
         box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
         display: block;
-        width: 100%;
+        width: 93%;
         font-size: 16px;
         color: var(--gray-900);
         font-weight: 400;
@@ -280,13 +280,15 @@
         .login-page {
             flex-direction: column;
             min-height: 100vh;
+            align-items: center;
         }
 
         .hero-image-section {
-            min-height: 200px;
+            min-height: 45vh;
             max-height: 300px;
-            width: 100%;
+            width: 690px;
             flex: none;
+            background-position: center;
         }
 
         .form-section {
@@ -315,10 +317,12 @@
     }
 
     @media (max-width: 768px) {
+        
         .hero-image-section {
-            min-height: 150px;
+            min-height: 45vh;
             max-height: 200px;
-            padding: 20px;
+            width: 490px;
+            background-position: center;
         }
 
         .form-wrapper {
@@ -332,7 +336,6 @@
         .primary-button,
         .secondary-button {
             font-size: 18px;
-            padding: 14px 20px;
         }
 
         .text-input {
@@ -342,6 +345,10 @@
     }
 
     @media (max-width: 480px) {
+        .hero-image-section{
+            width: 100%;
+            min-height: 30vh;
+        }
         .form-container {
             padding: 0 16px;
         }
@@ -366,7 +373,6 @@
         .primary-button,
         .secondary-button {
             font-size: 16px;
-            padding: 12px 16px;
             min-height: 44px;
         }
 
@@ -376,6 +382,9 @@
     }
 
     @media (max-width: 360px) {
+        .login-page{
+            min-height: 0vh;
+        }
         .form-container {
             padding: 0 12px;
         }
