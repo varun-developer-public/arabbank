@@ -1,7 +1,134 @@
-<h2>Signup</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Signup - Data Marketplace{% endblock %}
+
+{% block content %}
+<main class="login-page">
+    <div class="hero-image-section">
+    </div>
+    <section class="form-section">
+    <div class="form-container">
+        <div class="form-wrapper">
+            <div class="form-content">
+                <header class="page-header">
+                    <h1 class="page-title">Welcome to Internal Data Market Place</h1>
+                </header>
+
+                <form class="signup-form" method="post" role="form" aria-labelledby="page-title">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="form-fields">
+                        <div class="input-group">
+                            <label for="id_first_input" class="field-label">Username</label>
+                            <div class="input-container">
+                                <input
+                                    type="text"
+                                    id="id_first_input"
+                                    name="first_input"
+                                    class="text-input"
+                                    placeholder="User name"
+                                    required
+                                    aria-describedby="first-input-help"
+                                    {% if form.first_input.value %}value="{{ form.first_input.value }}"{% endif %}
+                                />
+                            </div>
+                            {% if form.first_input.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.first_input.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="id_second_input" class="field-label">Password</label>
+                            <div class="input-container">
+                                <input
+                                    type="text"
+                                    id="id_second_input"
+                                    name="second_input"
+                                    class="text-input"
+                                    placeholder="Password"
+                                    required
+                                    aria-describedby="second-input-help"
+                                    {% if form.second_input.value %}value="{{ form.second_input.value }}"{% endif %}
+                                />
+                            </div>
+                            {% if form.second_input.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.second_input.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="input-group">
+                            <label for="id_phone" class="field-label">Phone number</label>
+                            <div class="phone-input-container">
+                                <div class="country-dropdown" role="button" tabindex="0" aria-label="Select country code" aria-expanded="false">
+                                    <span class="country-text">US</span>
+                                    <svg class="dropdown-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 7.5L10 12.5L15 7.5" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <input
+                                    type="tel"
+                                    id="id_phone"
+                                    name="phone"
+                                    class="phone-input"
+                                    placeholder="+1 (555) 000-0000"
+                                    required
+                                    autocomplete="tel"
+                                    aria-describedby="phone-help"
+                                    {% if form.phone.value %}value="{{ form.phone.value }}"{% endif %}
+                                />
+                            </div>
+                            {% if form.phone.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.phone.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">
+                            Create Account
+                        </button>
+
+                        <div class="login-prompt">
+                            <span class="login-question">Already have account?</span>
+                            <a href="{% url 'login' %}" class="signup-link">Login</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+{% endblock %}
