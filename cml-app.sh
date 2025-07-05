@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Collect static files
-python manage.py collectstatic --noinput
+echo "📦 Installing Python dependencies from requirements.txt..."
+pip3 install -r requirements.txt
 
-# Apply database migrations
-python manage.py migrate
+echo "📂 Collecting static files..."
+python3 manage.py collectstatic --noinput
 
-# Start the Django server using Gunicorn
-gunicorn ArabDataMarketPlace.wsgi:application \
-  --bind 127.0.0.1:8000 \
-  --workers 3 \
-  --timeout 120
+echo "🧱 Applying database migrations..."
+python3 manage.py migrate
+
+echo "🚀 Starting Gunicorn server..."
+exec gunicorn ArabDataMarketPlace.wsgi:application --bind=127.0.0.1:8000 --workers=3 --timeout=120
